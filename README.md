@@ -4,14 +4,14 @@
 >
 > *Rancang Bangun Sistem Analisis Sentimen & Pemetaan Geospasial untuk Aplikasi Info BMKG menggunakan Hybrid NLP (IndoBERT & NER) dan Integrasi Data Kebencanaan Real-Time.*
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![Framework](https://img.shields.io/badge/Framework-Flask-green)
-![AI Model](https://img.shields.io/badge/Model-IndoBERT%20Transformer-orange)
-![Status](https://img.shields.io/badge/Status-Prototype-yellow)
+![Python](https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python&logoColor=white)
+![Framework](https://img.shields.io/badge/Framework-Flask-green?style=for-the-badge&logo=flask&logoColor=white)
+![AI Model](https://img.shields.io/badge/Model-IndoBERT%20Transformer-orange?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Prototype-yellow?style=for-the-badge)
 
 ---
 
-## 📸 System Preview (Galeri)
+## 📸 Galeri Sistem (System Preview)
 
 Berikut adalah tampilan antarmuka dari sistem yang telah dikembangkan:
 
@@ -20,13 +20,12 @@ Berikut adalah tampilan antarmuka dari sistem yang telah dikembangkan:
 ![Dashboard View](screenshots/Dashboard.jpg)
 
 ### 2. Geo-Spatial Intelligence (Peta Sebaran)
-*Validasi silang antara lokasi Laporan Warga (Oranye) dan Sensor Gempa (Merah) menggunakan NER.*
+*Validasi silang antara lokasi Laporan Warga (Oranye) dan Sensor Gempa (Merah) menggunakan NER & LeafletJS.*
 ![GeoMap View](screenshots/GeoMap.jpg)
 
 ### 3. Developer Action Center
 *Prescriptive Analytics yang memberikan rekomendasi perbaikan teknis berdasarkan klaster keluhan.*
 ![Dev Center View](screenshots/DevCenter.jpg)
-
 
 ---
 
@@ -69,6 +68,11 @@ BMKG-INTEL/
 ├── README.md                # Dokumentasi proyek
 ├── .gitignore               # Daftar file yang diabaikan oleh Git
 │
+├── screenshots/             # Galeri Tampilan Sistem
+│   ├── Dashboard.jpg
+│   ├── DevCenter.jpg
+│   └── GeoMap.jpg
+│
 ├── data/                    # Manajemen Data
 │   ├── raw/                 # Data mentah hasil scraping (CSV)
 │   └── processed/           # Data bersih siap training/analisis
@@ -85,7 +89,6 @@ BMKG-INTEL/
 │
 ├── static/                  # File Statis (Frontend Assets)
 │   ├── css/                 # Styling tampilan dashboard (Modern UI)
-│   ├── images/              # Logo dan ikon
 │   ├── js/                  # Script JavaScript tambahan
 │   ├── data_map.json        # Output JSON untuk Geo-Map
 │   └── bug_report.json      # Output JSON untuk Dev Center
