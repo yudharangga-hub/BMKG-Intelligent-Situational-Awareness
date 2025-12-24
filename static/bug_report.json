@@ -1,0 +1,56 @@
+{
+    "critical": [
+        {
+            "issue": "Aplikasi Lambat / Berat",
+            "count": 183,
+            "recommendation": "Lakukan profiling memori & optimasi query database lokal."
+        },
+        {
+            "issue": "Notifikasi Gempa Terlambat/Mati",
+            "count": 46,
+            "recommendation": "Prioritaskan push notification channel 'High Importance' di Firebase."
+        },
+        {
+            "issue": "Masalah Login / Akun",
+            "count": 33,
+            "recommendation": "Periksa API Gateway & layanan OTP provider."
+        },
+        {
+            "issue": "Force Close / Crash",
+            "count": 25,
+            "recommendation": "Cek log 'Fatal Exception' pada Android Vitals & perbaiki NullPointer."
+        },
+        {
+            "issue": "Koneksi / Server Down",
+            "count": 22,
+            "recommendation": "Scale-up kapasitas server saat traffic tinggi & cek CDN."
+        },
+        {
+            "issue": "Akurasi Lokasi Gempa",
+            "count": 8,
+            "recommendation": "Validasi koordinat sensor seismograf dengan peta digital."
+        }
+    ],
+    "ux_issues": [
+        {
+            "issue": "Bug Setelah Update Aplikasi",
+            "count": 115,
+            "recommendation": "Rollback fitur bermasalah atau rilis hotfix secepatnya."
+        },
+        {
+            "issue": "Info Gempa Tidak Update",
+            "count": 64,
+            "recommendation": "Pastikan sinkronisasi data background berjalan real-time."
+        },
+        {
+            "issue": "Prediksi Cuaca Tidak Akurat",
+            "count": 9,
+            "recommendation": "Kalibrasi model prediksi dengan data stasiun pengamatan terdekat."
+        },
+        {
+            "issue": "Widget Cuaca Bermasalah",
+            "count": 8,
+            "recommendation": "Perbaiki service widget agar auto-refresh di background."
+        }
+    ]
+}

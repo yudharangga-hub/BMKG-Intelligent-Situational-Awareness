@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Animasi Lampu Warning (Kanan) */
+    @keyframes blink-warning {
+        0% { opacity: 1; text-shadow: 0 0 10px #ffc107; transform: scale(1); }
+        50% { opacity: 0.3; text-shadow: none; transform: scale(0.9); }
+        100% { opacity: 1; text-shadow: 0 0 10px #ffc107; transform: scale(1); }
+    }
+    .warning-icon-anim {
+        animation: blink-warning 1s infinite;
+        font-size: 1.2rem;
+    }
+</style>
+
+<div class="row g-4">
+    
+    <div class="col-lg-4">
+        
+        <div class="tech-card mb-4">
+            <h5 class="text-primary mb-3"><i class="fas fa-satellite-dish"></i> INPUT STREAM</h5>
+            
+            <div class="d-flex align-items-center mb-3 p-2 bg-light border rounded">
+                <i class="fab fa-google-play fa-2x text-success me-3"></i>
+                <div style="line-height: 1;">
+                    <span class="d-block fw-bold text-dark small">DATA FEED:</span>
+                    <small class="text-muted" style="font-size:0.75rem;">Public Review Stream</small>
+                </div>
+            </div>
+
+            <textarea id="inputText" class="form-control mb-3" rows="6" placeholder="Masukkan laporan di sini...&#10;Contoh: 'Gempa di Garut barusan kencang, tapi tidak ada notifikasi. Mohon diperbaiki!'"></textarea>
+            
+            <button onclick="analyzeText()" class="btn btn-primary-tech shadow-sm w-100">
+                <i class="fas fa-search me-2"></i> ANALISIS DATA
+            </button>
+        </div>
+
+        <div class="tech-card">
+            <h5 class="text-secondary small mb-3"><i class="fas fa-server"></i> KNOWLEDGE BASE</h5>
+            <ul class="list-group list-group-flush small">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total Dataset</span>
+                    <span class="fw-bold">{{ metrics.total }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Last Update</span>
+                    <span>{{ metrics.last_update }}</span>
+                </li>
+            </ul>
+            
+            <button class="btn btn-outline-secondary btn-sm w-100 mt-3" data-bs-toggle="modal" data-bs-target="#matrixModal">
+                <i class="fas fa-chart-bar me-1"></i> LIHAT VALIDASI MODEL (F1/MATRIX)
+            </button>
+        </div>
+
+    </div>
+
+    <div class="col-lg-8">
+        
+        <div class="row mb-4">
+            <div class="col-md-7">
+                <div id="bmkgWidget" class="tech-card h-100 mb-0 bg-white" style="border-left: 5px solid #dc3545; display: none;">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-danger fw-bold small pulse-text"><i class="fas fa-rss"></i> GEMPA TERKINI</span>
+                        <span class="badge bg-danger">BMKG</span>
+                    </div>
+                    
+                    <div class="d-flex align-items-center">
+                        <div class="text-center me-3 pe-3 border-end">
+                            <h2 id="quakeMag" class="text-danger fw-bold m-0" style="font-size: 2.2rem;">-</h2>
+                            <small class="text-muted fw-bold">MAG</small>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 id="quakeLoc" class="text-dark mb-1 small fw-bold text-truncate" style="max-width: 200px;">-</h6>
+                            <div class="small text-muted mb-2"><i class="far fa-clock"></i> <span id="quakeTime">-</span></div>
+                            
+                            <button class="btn btn-sm btn-outline-danger w-100 py-0" style="font-size: 0.7rem;" onclick="showQuakeDetail()">
+                                <i class="fas fa-eye"></i> Lihat Detail Parameter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-5">
+                <div id="warningWidget" class="tech-card h-100 mb-0" style="border-left: 5px solid #ffc107; display: none; background-color: #fffbeb;">
+                    <div class="d-flex justify-content-between border-bottom pb-1 mb-2">
+                        <span class="text-warning fw-bold small"><i class="fas fa-exclamation-triangle"></i> WARNING CUACA</span>
+                        <i class="fas fa-lightbulb text-warning warning-icon-anim"></i>
+                    </div>
+                    
+                    <div id="warningList" style="overflow-y: auto; max-height: 120px; padding-right: 5px;">
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="placeholder" class="text-center py-5 text-muted opacity-50 border rounded bg-light" style="border-style: dashed !important;">
+            <i class="fas fa-brain fa-3x mb-3"></i>
+            <h5>AI Engine Standby</h5>
+            <p class="small">Menunggu input data untuk analisis...</p>
+        </div>
+
+        <div id="resultArea" class="d-none">
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <div class="tech-card mb-0 bg-white text-center py-3">
+                        <small class="text-muted fw-bold">ASPEK TERDETEKSI</small>
+                        <h3 id="resAspek" class="text-primary fw-bold my-2">-</h3>
+                        <div class="progress" style="height: 6px;">
+                            <div id="barAspek" class="progress-bar bg-primary" style="width: 0%"></div>
+                        </div>
+                        <small id="confAspek" class="text-muted mt-1 d-block" style="font-size: 0.75rem;">-</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tech-card mb-0 bg-white text-center py-3">
+                        <small class="text-muted fw-bold">EMOSI PENGGUNA</small>
+                        <h3 id="resEmosi" class="text-danger fw-bold my-2">-</h3>
+                        <div class="progress" style="height: 6px;">
+                            <div id="barEmosi" class="progress-bar bg-danger" style="width: 0%"></div>
+                        </div>
+                        <small id="confEmosi" class="text-muted mt-1 d-block" style="font-size: 0.75rem;">-</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-card" style="border-left: 5px solid #198754; background-color: #f8fff9;">
+                <h5 class="text-success mb-3 small fw-bold"><i class="fas fa-robot"></i> AI DECISION SUPPORT</h5>
+                
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="p-2 bg-white border rounded">
+                            <strong class="d-block text-danger small mb-1"><i class="fas fa-wrench"></i> TECHNICAL ACTION</strong>
+                            <div id="recDev" class="small text-dark word-wrap-fix">-</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-2 bg-white border rounded">
+                            <strong class="d-block text-primary small mb-1"><i class="fas fa-magic"></i> UX OPTIMIZATION</strong>
+                            <div id="recUX" class="small text-dark word-wrap-fix">-</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="p-3 bg-white border rounded shadow-sm">
+                            <div class="d-flex justify-content-between mb-1">
+                                <strong class="text-dark small"><i class="fas fa-reply"></i> GENERATED REPLY DRAFT</strong>
+                                <button onclick="copyText()" class="btn btn-sm btn-light border py-0 px-2" title="Copy"><i class="fas fa-copy"></i></button>
+                            </div>
+                            <div class="fst-italic text-secondary small word-wrap-fix" id="recReply">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="quakeDetailModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title fw-bold"><i class="fas fa-rss"></i> DETAIL GEMPA TERKINI</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-3 bg-dark rounded p-2">
+                    <img id="modalQuakeImg" src="" alt="Shakemap" class="img-fluid rounded" style="max-height: 250px;">
+                </div>
+                <table class="table table-bordered table-sm small">
+                    <tr><td class="fw-bold bg-light">Waktu Gempa</td><td id="modalQuakeTime">-</td></tr>
+                    <tr><td class="fw-bold bg-light">Magnitudo</td><td id="modalQuakeMag" class="fw-bold text-danger">-</td></tr>
+                    <tr><td class="fw-bold bg-light">Kedalaman</td><td id="modalQuakeDepth">-</td></tr>
+                    <tr><td class="fw-bold bg-light">Koordinat</td><td id="modalQuakeCoord">-</td></tr>
+                    <tr><td class="fw-bold bg-light">Lokasi</td><td id="modalQuakeLoc">-</td></tr>
+                    <tr><td class="fw-bold bg-light">Potensi</td><td id="modalQuakePotensi" class="text-warning bg-dark fw-bold">-</td></tr>
+                    <tr><td class="fw-bold bg-light">Dirasakan</td><td id="modalQuakeFelt">-</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="matrixModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold"><i class="fas fa-chart-line"></i> Model Validation Metrics</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center mb-3">
+                    <div class="col-6">
+                        <h2 class="text-primary fw-bold" id="modalAccAbsa">-</h2>
+                        <small>ABSA Accuracy</small>
+                    </div>
+                    <div class="col-6">
+                        <h2 class="text-danger fw-bold" id="modalAccEmo">-</h2>
+                        <small>Emotion F1-Score</small>
+                    </div>
+                </div>
+                <hr>
+                <h6 class="text-center mb-3">Confusion Matrix Visualization</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <small class="d-block text-center fw-bold mb-2">Aspect Model</small>
+                        <div id="matrixContainerAbsa" class="table-responsive d-flex justify-content-center"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <small class="d-block text-center fw-bold mb-2">Emotion Model</small>
+                        <div id="matrixContainerEmo" class="table-responsive d-flex justify-content-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentQuakeData = null;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Load Gempa
+        fetch('/api/live_quake').then(r => r.json()).then(data => {
+            if(data.latest) {
+                const q = data.latest;
+                currentQuakeData = q;
+                document.getElementById('bmkgWidget').style.display = 'block';
+                document.getElementById('quakeMag').innerText = q.magnitudo;
+                document.getElementById('quakeLoc').innerText = q.wilayah;
+                document.getElementById('quakeTime').innerText = q.jam;
+                document.getElementById('quakePotensi').innerText = q.potensi;
+            }
+        });
+
+        // Load Warning
+        fetch('/api/weather_warning').then(r => r.json()).then(data => {
+            if(data.length > 0) {
+                document.getElementById('warningWidget').style.display = 'block';
+                let html = '';
+                data.forEach(w => {
+                    html += `
+                    <div class="alert alert-warning p-2 mb-2 border-0 bg-white border-start border-4 border-warning shadow-sm">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <strong class="d-block text-dark small" style="font-size:0.75rem; line-height:1.2;">${w.judul}</strong>
+                            <a href="${w.link}" target="_blank" class="badge bg-warning text-dark text-decoration-none border border-warning" style="font-size:0.6rem; min-width:50px;">
+                                Detail <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                        <p class="mb-1 small text-secondary text-truncate" style="font-size: 0.7rem;">
+                            ${w.deskripsi}
+                        </p>
+                        <small class="text-muted fst-italic" style="font-size:0.65rem"><i class="far fa-clock"></i> ${w.waktu}</small>
+                    </div>`;
+                });
+                document.getElementById('warningList').innerHTML = html;
+            } else {
+                document.getElementById('warningWidget').style.display = 'block';
+                document.getElementById('warningList').innerHTML = `<div class="text-center text-muted small py-4"><i class="fas fa-check-circle text-success mb-1"></i><br>Tidak ada peringatan dini.</div>`;
+            }
+        });
+
+        // Load Metrics
+        fetch('/static/model_metrics.json').then(r => r.json()).then(data => {
+            document.getElementById('modalAccAbsa').innerText = data.absa.accuracy + "%";
+            document.getElementById('modalAccEmo').innerText = data.emotion.f1;
+            
+            renderMatrix('matrixContainerAbsa', data.absa.cm, data.absa.labels);
+            renderMatrix('matrixContainerEmo', data.emotion.cm, data.emotion.labels);
+        });
+    });
+
+    function showQuakeDetail() {
+        if(!currentQuakeData) return;
+        let q = currentQuakeData;
+        document.getElementById('modalQuakeImg').src = q.shakemap;
+        document.getElementById('modalQuakeTime').innerText = q.jam;
+        document.getElementById('modalQuakeMag').innerText = q.magnitudo + " SR";
+        document.getElementById('modalQuakeDepth').innerText = q.kedalaman;
+        document.getElementById('modalQuakeCoord').innerText = q.koordinat;
+        document.getElementById('modalQuakeLoc').innerText = q.wilayah;
+        document.getElementById('modalQuakePotensi').innerText = q.potensi;
+        document.getElementById('modalQuakeFelt').innerText = q.dirasakan || "-";
+        var myModal = new bootstrap.Modal(document.getElementById('quakeDetailModal'));
+        myModal.show();
+    }
+
+    function renderMatrix(id, matrix, labels) {
+        let html = '<table class="table table-bordered table-sm small" style="font-size:0.7rem;">';
+        
+        // Header (Label Atas)
+        html += '<tr class="bg-light fw-bold"><td>Act\\Pred</td>';
+        labels.forEach(l => html += `<td>${l}</td>`); // Full label, tidak dipotong
+        html += '</tr>';
+        
+        // Rows (Isi Data)
+        matrix.forEach((row, i) => {
+            html += `<tr><td class="bg-light fw-bold">${labels[i]}</td>`; // Full label
+            row.forEach((val, j) => {
+                let bg = i===j ? '#d1e7dd' : (val>0 ? '#f8d7da' : '#fff');
+                html += `<td style="background:${bg}">${val}</td>`;
+            });
+            html += '</tr>';
+        });
+        html += '</table>';
+        document.getElementById(id).innerHTML = html;
+    }
+
+    async function analyzeText() {
+        let text = document.getElementById("inputText").value;
+        if(!text) return alert("Mohon isi teks laporan!");
+
+        let btn = document.querySelector(".btn-primary-tech");
+        let orig = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> PROSES...';
+        btn.disabled = true;
+
+        try {
+            let res = await fetch("/analyze", {
+                method: "POST", headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({text: text})
+            });
+            let data = await res.json();
+
+            document.getElementById("placeholder").classList.add("d-none");
+            document.getElementById("resultArea").classList.remove("d-none");
+
+            document.getElementById("resAspek").innerText = data.aspek;
+            document.getElementById("barAspek").style.width = data.aspek_conf + "%";
+            document.getElementById("confAspek").innerText = "Conf: " + data.aspek_conf + "%";
+
+            document.getElementById("resEmosi").innerText = data.emosi;
+            document.getElementById("barEmosi").style.width = data.emosi_conf + "%";
+            document.getElementById("confEmosi").innerText = "Conf: " + data.emosi_conf + "%";
+
+            typeWriter("recDev", data.recommendations.action_dev);
+            document.getElementById("recUX").innerText = data.recommendations.action_ux;
+            document.getElementById("recReply").innerText = data.recommendations.draft_reply;
+
+        } catch(e) { alert("Error: " + e); }
+        
+        btn.innerHTML = orig;
+        btn.disabled = false;
+    }
+
+    function typeWriter(id, text) {
+        let el = document.getElementById(id);
+        el.innerText = "";
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                el.innerText += text.charAt(i);
+                i++;
+                setTimeout(type, 5);
+            }
+        }
+        type();
+    }
+
+    function copyText() {
+        navigator.clipboard.writeText(document.getElementById("recReply").innerText);
+        alert("Draf disalin!");
+    }
+</script>
+{% endblock %}

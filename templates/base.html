@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMKG Intelligence System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* CSS Khusus Base */
+        body { padding-bottom: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        .main-content { flex: 1; padding-bottom: 40px; }
+        
+        /* Footer Area */
+        .footer-wrapper {
+            background-color: #0f172a;
+            color: white;
+            border-top: 4px solid var(--accent-cyan);
+            margin-top: auto;
+        }
+        
+        /* Disclaimer Strip */
+        .disclaimer-strip {
+            background: rgba(255,255,255,0.05);
+            padding: 15px 0;
+            font-size: 0.85rem;
+            color: #cbd5e0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        /* Copyright Strip */
+        .copyright-strip {
+            padding: 15px 0;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Ambil URL path saat ini (misal: /map)
+            var currentPath = window.location.pathname;
+            
+            // Loop semua link di navbar
+            var navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            navLinks.forEach(function(link) {
+                // Ambil href dari link (misal: /map)
+                var linkPath = link.getAttribute('href');
+                
+                // Jika path cocok, tambahkan class 'active'
+                if (currentPath === linkPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ url_for('static', filename='images/logo_unpam.png') }}" alt="UNPAM" class="logo-unpam me-3" style="height: 50px;">
+                <img src="{{ url_for('static', filename='images/logo_bmkg.png') }}" alt="BMKG" class="logo-unpam me-3" style="height: 45px;">
+                <div class="d-none d-md-block">
+                    <div style="font-size: 1.1rem; font-weight:800; color: #0056b3; letter-spacing: 1px;">INTELLIGENT SITUATIONAL</div>
+                    <div style="font-size: 0.75rem; color: #666; font-weight: 600;">AWARENESS PLATFORM</div>
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link px-3" href="/">DASHBOARD</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="/map">GEO-MAP</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="/trends">TRENDS</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="/dev_recommendations">DEV CENTER</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center mt-3 mt-lg-0 justify-content-end border-start ps-3">
+                    <div class="text-end" style="line-height: 1.2;">
+                        <div class="fw-bold text-dark" style="font-size: 0.9rem;">Yudha Rangga WP</div>
+                        <div class="text-muted small" style="font-family: monospace;">NIM: 241012000151</div>
+                        <div class="text-primary fw-bold" style="font-size: 0.65rem;">MAGISTER TEKNIK INFORMATIKA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4 main-content mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="footer-wrapper">
+        <div class="disclaimer-strip">
+            <div class="container">
+                <i class="fas fa-exclamation-circle text-warning me-2"></i>
+                <strong>DISCLAIMER AKADEMIK:</strong> Aplikasi ini adalah prototipe penelitian tesis. Data Gempa & Cuaca bersumber dari API Terbuka BMKG (Real-time). Analisis sentimen dihasilkan oleh model AI (IndoBERT) dan mungkin memiliki margin error. Tidak mewakili pandangan resmi instansi terkait.
+            </div>
+        </div>
+
+        <div class="container copyright-strip">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    &copy; 2025 <strong>Universitas Pamulang</strong>. All Rights Reserved.
+                </div>
+                <div class="col-md-6 text-end">
+                    <span class="badge bg-success bg-gradient border border-light me-2">SYSTEM ONLINE</span>
+                    <span class="text-info small"><i class="fas fa-microchip"></i> RTX 3080 ACCELERATED</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

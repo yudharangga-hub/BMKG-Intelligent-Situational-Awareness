@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <h2 class="mb-1">DATA TRENDS & PATTERNS</h2>
+        <p class="text-muted">Visualisasi Dinamika Isu dan Topik Populer</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    
+    <div class="col-lg-12">
+        <div class="tech-card">
+            <h5 class="text-primary mb-3"><i class="fas fa-cloud"></i> TOPIC WORD CLOUD</h5>
+            <p class="text-secondary small">Kata-kata yang paling sering muncul dalam ulasan pengguna (Semakin besar = Semakin sering disebut).</p>
+            
+            <div class="text-center p-3 bg-light border rounded">
+                <img src="{{ url_for('static', filename='images/wordcloud_freq.png') }}" 
+                     alt="WordCloud Topik" 
+                     style="width: 100%; max-height: 400px; object-fit: contain; border-radius: 5px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="tech-card">
+            <h5 class="text-primary mb-3"><i class="fas fa-chart-area"></i> SENTIMENT TIME SERIES</h5>
+            <p class="text-secondary small">Pergerakan sentimen positif vs negatif dari waktu ke waktu.</p>
+            <div style="height: 400px;">
+                <canvas id="trendChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="tech-card">
+            <h5 class="text-danger mb-3"><i class="fas fa-project-diagram"></i> EVENT CORRELATION (BIG DATA ANALYSIS)</h5>
+            <p class="text-secondary small">
+                Analisis korelasi silang antara <strong>Volume Keluhan</strong> dengan <strong>Magnitudo Gempa</strong>.
+                <span class="badge bg-success bg-opacity-75">Insight:</span> Lonjakan keluhan sering terjadi pasca gempa > 5.0 SR.
+            </p>
+            <div style="height: 400px;">
+                <canvas id="correlationChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // 1. Trend Chart
+    fetch('/static/trends_data.json').then(r => r.json()).then(data => {
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        
+        // Gradient Colors
+        let gradPos = ctx.createLinearGradient(0, 0, 0, 400);
+        gradPos.addColorStop(0, 'rgba(25, 135, 84, 0.5)'); gradPos.addColorStop(1, 'rgba(25, 135, 84, 0.0)');
+        
+        let gradNeg = ctx.createLinearGradient(0, 0, 0, 400);
+        gradNeg.addColorStop(0, 'rgba(220, 53, 69, 0.5)'); gradNeg.addColorStop(1, 'rgba(220, 53, 69, 0.0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.dates,
+                datasets: [
+                    {
+                        label: 'Positif', data: data.sentiment.positif,
+                        borderColor: '#198754', backgroundColor: gradPos, fill: true, tension: 0.4
+                    },
+                    {
+                        label: 'Negatif', data: data.sentiment.negatif,
+                        borderColor: '#dc3545', backgroundColor: gradNeg, fill: true, tension: 0.4
+                    }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    });
+
+    // 2. Correlation Chart
+    fetch('/static/correlation_data.json').then(r => r.json()).then(data => {
+        const ctx = document.getElementById('correlationChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.dates,
+                datasets: [
+                    {
+                        label: 'Gempa (SR)', data: data.quakes, type: 'line',
+                        borderColor: '#d90429', borderWidth: 2, yAxisID: 'y_gempa', pointRadius: 3
+                    },
+                    {
+                        label: 'Volume Keluhan', data: data.complaints, type: 'bar',
+                        backgroundColor: '#0d47a1', yAxisID: 'y_keluhan'
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    y_keluhan: { type: 'linear', position: 'left', title: {display:true, text:'Jml Keluhan'} },
+                    y_gempa: { type: 'linear', position: 'right', title: {display:true, text:'Magnitudo'}, min:0, max:10, grid:{drawOnChartArea:false} }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

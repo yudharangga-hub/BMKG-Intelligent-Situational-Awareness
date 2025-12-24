@@ -1,0 +1,431 @@
+[
+    {
+        "name": "Gunung Sahari",
+        "lat": -6.1367967,
+        "lon": 106.8323793,
+        "count": 37,
+        "samples": [
+            "Sangat membantu sihh..,tp kenapa titiknya gunung sahari ya skrang?...",
+            "gunung sahari terus..\ud83d\ude04\ud83d\ude04...",
+            "Sangat bagus, tapi kenapa titik lokasinya menjadi gunung sahari, padahal sudah setting lokasi pakai ..."
+        ]
+    },
+    {
+        "name": "Gunung Sahari Selatan",
+        "lat": -6.1611974,
+        "lon": 106.8423541,
+        "count": 31,
+        "samples": [
+            "tidak bisa setting ke daerah setempat, sudah ganti gps, set ke lokasi saat ini, selalu berubah lsgi ...",
+            "lokasi tidak bisa ganti, selalu di gunung sahari selatan,.. mode bahasa juga tidak bisa di ganti.....",
+            "Harap lokasi bisa diperbaiki agar bisa sesuai dengan lokasi pengguna aplikasi...sudah saya ubah lewa..."
+        ]
+    },
+    {
+        "name": "Jepang",
+        "lat": -6.8264703,
+        "lon": 110.8705599,
+        "count": 22,
+        "samples": [
+            "sebenernya sih bagus ya, cuma tambahin dong peringatan dini gempa kek jepang biar bisa antisipasi...",
+            "Notif gempanya setelah gempanya selesai, tolong BMKG untuk informasi gempa itu diusahakan lebih cepa...",
+            "Mohon tambahkan sistem peringatan sebelum gempa bumi seperti Jepang, bagi yang terdampak..."
+        ]
+    },
+    {
+        "name": "Jakarta",
+        "lat": -6.1754049,
+        "lon": 106.827168,
+        "count": 19,
+        "samples": [
+            "Lokasi saya di Cilebut Barat, Sukaraja, Kabupaten Bogor kalau dapet notifikasi munculnya berita Peri...",
+            "gempa di jakarta notifikasi 1 jam setelah kejadian..... bagaimana ini...",
+            "lokaskmya stuck di gunung sahari selatan terus,berkali kali atur lokasi,bahkan diketik,tetap lokasi ..."
+        ]
+    },
+    {
+        "name": "Jabodetabek",
+        "lat": -6.2437707,
+        "lon": 106.8524248,
+        "count": 13,
+        "samples": [
+            "Desa/Kelurahan yang masuk wilayah Kabupaten Bogor, Kabupaten Bekasi & Kabupaten Tangerang kalau dapa...",
+            "Lokasi saya di Cilebut Barat, Sukaraja, Kabupaten Bogor kalau dapet notifikasi munculnya berita Peri...",
+            "sorry to say saya harus mengatakan aplikasi nya nggak akurat untuk bagian prakiraan cuaca. peringata..."
+        ]
+    },
+    {
+        "name": "Jawa Barat",
+        "lat": -6.8891904,
+        "lon": 107.6404716,
+        "count": 8,
+        "samples": [
+            "Lokasi saya di Cilebut Barat, Sukaraja, Kabupaten Bogor kalau dapet notifikasi munculnya berita Peri...",
+            "sorry to say saya harus mengatakan aplikasi nya nggak akurat untuk bagian prakiraan cuaca. peringata...",
+            "Aplikasi yang cukup lengkap. Semoga makin diimprove tapi ada beberapa improvement yang bisa: - updat..."
+        ]
+    },
+    {
+        "name": "Bekasi",
+        "lat": -6.2349858,
+        "lon": 106.9945444,
+        "count": 8,
+        "samples": [
+            "tolong kalau ada kejadian gempa kabarin secepatnya ini udah setengah jam gempa Bekasi belum ada alar...",
+            "Gempa jam 20.00.Tgl.20 Agustus 2025.Lokasi Bekasi kedalaman 10 km.APP TIDAK BERGUNA.WAJIB DI UNINSTA...",
+            "sorry to say saya harus mengatakan aplikasi nya nggak akurat untuk bagian prakiraan cuaca. peringata..."
+        ]
+    },
+    {
+        "name": "Gunung Sahari Jakarta",
+        "lat": -6.1523984,
+        "lon": 106.8387724,
+        "count": 8,
+        "samples": [
+            "min kenapa lokasi saya jauh banget saya ada di cisaat sukabumi, lokasi nya gunung sahari jakarta sud...",
+            "untuk gps tidak berfungsi, lokasi saya di Sukabumi tapi laporan cuaca di gunung Sahari Jakarta. tolo...",
+            "Kenapa sekarang lokasinya selalu di gunung sahari jakarta.... diubah2 tetap saja gunung sahari... no..."
+        ]
+    },
+    {
+        "name": "Bogor",
+        "lat": -6.5962986,
+        "lon": 106.7972421,
+        "count": 4,
+        "samples": [
+            "sorry to say saya harus mengatakan aplikasi nya nggak akurat untuk bagian prakiraan cuaca. peringata...",
+            "Aplikasi yang cukup lengkap. Semoga makin diimprove tapi ada beberapa improvement yang bisa: - updat...",
+            "Sejak diperbaharui info cuacanya tidak update. Saya di Bekasi walau masuk wilayah jabar tapi saya bu..."
+        ]
+    },
+    {
+        "name": "Sumbar",
+        "lat": -0.5827529,
+        "lon": 100.6133379,
+        "count": 4,
+        "samples": [
+            "knpa lokasi saya tidak singkron ya min, lokasi saya Padang sumbar, knpa di APK jd gunung Sahari, pda...",
+            "Untuk daerah sumbar lama banget keluar info gempanya..keseringan info ug diluar sumbar...",
+            "Beberapa menit yang lalu gempa di sumbar, tp aplikasi tidak ada memberikan info juga di sosmed..."
+        ]
+    },
+    {
+        "name": "Jawa Timur",
+        "lat": -7.6977397,
+        "lon": 112.4914199,
+        "count": 4,
+        "samples": [
+            "Posisi selalu di gunung Sahari padahal lokasi kami di Jawa Timur, diatur pakai gps maupun manual jug...",
+            "Aplikasinya sangat bagus sekali dan cocok untuk melihat ramalan cuaca di Jawa Timur....",
+            "Gak ada kualitas udara di jawa tengah,jawa barat, jawa timur tolong di perbaiki aplikasi bmkg sudah ..."
+        ]
+    },
+    {
+        "name": "Jabar",
+        "lat": -6.8891904,
+        "lon": 107.6404716,
+        "count": 4,
+        "samples": [
+            "Sejak diperbaharui info cuacanya tidak update. Saya di Bekasi walau masuk wilayah jabar tapi saya bu...",
+            "BMKG jangan berbohong terus dong. BMKG sangat luar biasa tidak akurat. BMKG hanya penipu. Setiap har..."
+        ]
+    },
+    {
+        "name": "Kabupaten Bogor",
+        "lat": -6.5453255,
+        "lon": 107.0017425,
+        "count": 3,
+        "samples": [
+            "Desa/Kelurahan yang masuk wilayah Kabupaten Bogor, Kabupaten Bekasi & Kabupaten Tangerang kalau dapa...",
+            "Lokasi saya di Cilebut Barat, Sukaraja, Kabupaten Bogor kalau dapet notifikasi munculnya berita Peri...",
+            "sorry to say saya harus mengatakan aplikasi nya nggak akurat untuk bagian prakiraan cuaca. peringata..."
+        ]
+    },
+    {
+        "name": "Semarang",
+        "lat": -6.9903988,
+        "lon": 110.4229104,
+        "count": 3,
+        "samples": [
+            "bug. lokasi tidak akurat padahal saya di semarang tapi lokasi GPS di aplikasi ada di gunung sahari...",
+            "aplikasinya bagus..cuma kalo boleh usul radar yg di yogya atau yg di semarang bisa di pindahin salah..."
+        ]
+    },
+    {
+        "name": "Yogyakarta",
+        "lat": -7.9778384,
+        "lon": 110.3672257,
+        "count": 3,
+        "samples": [
+            "1. Notifnya sudah nyala untuk gempa, tapi untuk Peringatan Dini Cuaca masih telat telat. 2. Tolong i...",
+            "Mohon maaf BMKG sebelumnya, bahwa di radar untuk Daerah Istimewa Yogyakarta itu masih bermasalah han...",
+            "Oya sebelum nya saya nyuwun ngampunten geh mas saya belum dapat bantuan dari bansos atas nama pak bu..."
+        ]
+    },
+    {
+        "name": "Korea",
+        "lat": -6.2394331,
+        "lon": 106.8328835,
+        "count": 3,
+        "samples": [
+            "Boro-boro kaya korea ada peringatan dini, inimah gempa udah lama baru muncul notif, duh konoha...",
+            "aplikasinya sdh bagus tapi menurut saya kalau peringatan gempa notifnya langsung otomatis masuk seja...",
+            "Kabar gempa selalu lamban. 4 5 menit setelah baru ada muncul notif. Gak kaya aplikasi di negara2 Sep..."
+        ]
+    },
+    {
+        "name": "Kabupaten Bekasi",
+        "lat": -6.2027897,
+        "lon": 107.1649161,
+        "count": 2,
+        "samples": [
+            "Desa/Kelurahan yang masuk wilayah Kabupaten Bogor, Kabupaten Bekasi & Kabupaten Tangerang kalau dapa...",
+            "sorry to say saya harus mengatakan aplikasi nya nggak akurat untuk bagian prakiraan cuaca. peringata..."
+        ]
+    },
+    {
+        "name": "Purwakarta",
+        "lat": -6.5913665,
+        "lon": 107.4019691,
+        "count": 2,
+        "samples": [
+            "untuk lokasi Purwakarta hilang min...",
+            "Saya baru download (21/04/24-jam 07 kurang) awalnya karena penasaran dari ulasan\u00b2 tentang akurasi wi..."
+        ]
+    },
+    {
+        "name": "Papua",
+        "lat": -2.4749149,
+        "lon": 138.08485,
+        "count": 2,
+        "samples": [
+            "kami di papua tp knp waktunya pake WIB. kan membingungkan.. tdk bsa atur zona waktu. tlong developer...",
+            "Ngebug, sudah stel lokasi di wilayah Jayapura,Papua malah lokasinya gunung Sahari Selatan..."
+        ]
+    },
+    {
+        "name": "Padang",
+        "lat": -0.9247587,
+        "lon": 100.3632561,
+        "count": 2,
+        "samples": [
+            "lokaskmya stuck di gunung sahari selatan terus,berkali kali atur lokasi,bahkan diketik,tetap lokasi ...",
+            "Kenapa notifikasi gempa bumi tidak aktif lagi saat ini...saya download aplikasi ini buat itu...agar ..."
+        ]
+    },
+    {
+        "name": "Gk Bs",
+        "lat": -6.9483013,
+        "lon": 107.6969952,
+        "count": 2,
+        "samples": [
+            "sebenere sangat membantu melihat cuaca tp setelah update 1 minggu (16-5-2025) yg lalu sampai skrg ma...",
+            "Habis diperbatui malah ngebug. Gk bs dibuka \ud83e\udd26\u200d\u2640\ufe0f..."
+        ]
+    },
+    {
+        "name": "Sukabumi",
+        "lat": -6.9199289,
+        "lon": 106.9265095,
+        "count": 2,
+        "samples": [
+            "untuk gps tidak berfungsi, lokasi saya di Sukabumi tapi laporan cuaca di gunung Sahari Jakarta. tolo...",
+            "Makin sini notif gempa makin ga ada, padahal hari ini gempa sukabumi dan deket ke aku. Tapi ga ada n..."
+        ]
+    },
+    {
+        "name": "Sumedang",
+        "lat": -6.8098713,
+        "lon": 107.9817732,
+        "count": 2,
+        "samples": [
+            "Semakin parah, bayangkan suatu titik gempa yang ada di sumedang misalnya, oleh sistem dinotifikasi b...",
+            "Aplikasinya udah bagus tapi sayang informasi gempa lambat, gempa sumedang itu kan dari kemarin tp in..."
+        ]
+    },
+    {
+        "name": "Tugu",
+        "lat": -7.7892387,
+        "lon": 110.3634648,
+        "count": 2,
+        "samples": [
+            "informasi cuaca di Daerah Istimewa Yogyakarta masi belum sempurna, tidak ada tampilan tugu Jogja sep..."
+        ]
+    },
+    {
+        "name": "Jogja",
+        "lat": -7.8012646,
+        "lon": 110.3646857,
+        "count": 2,
+        "samples": [
+            "informasi cuaca di Daerah Istimewa Yogyakarta masi belum sempurna, tidak ada tampilan tugu Jogja sep...",
+            "Di-update malah GPS nya kacau... Aku di Jogja kenaknya di Jakarta Untuk mencari kelurahan tidak dite..."
+        ]
+    },
+    {
+        "name": "D. I. Yogyakarta",
+        "lat": -6.96276,
+        "lon": 110.3932283,
+        "count": 2,
+        "samples": [
+            "Setelah update terakhir, kenapa saat berada di wilayah D.I. Yogyakarta tidak bisa menampilkan cuaca ..."
+        ]
+    },
+    {
+        "name": "Kepulauan Riau",
+        "lat": -0.1547846,
+        "lon": 104.5803745,
+        "count": 2,
+        "samples": [
+            "Gimana sih!?! Masa Kepulauan Riau (Batam & Tanjungpinang) tidak ditampilkan saat ini! Sedangkan prov...",
+            "Pemilihan lokasi tidak akurat, alamat saya di kepulauan riau, muncul nya malah di gunung sahari sela..."
+        ]
+    },
+    {
+        "name": "Surabaya",
+        "lat": -7.2462836,
+        "lon": 112.7377674,
+        "count": 2,
+        "samples": [
+            "Untuk cuaca maritime kurang akurat ... Beda jauh apa yg di tunjukan ... Pada wilayah laut Jawa dari ...",
+            "1. Notifnya sudah nyala untuk gempa, tapi untuk Peringatan Dini Cuaca masih telat telat. 2. Tolong i..."
+        ]
+    },
+    {
+        "name": "##Isa",
+        "lat": 4.6282995,
+        "lon": 95.6021466,
+        "count": 2,
+        "samples": [
+            "Setelah di update. Lokasinya gabisa diganti. Udah diganti ke lokasi saya, malah kembali ke lokasi Gu...",
+            "DI UPDATE MALAH NGEBUG GABISA GANTI LOKASI, BUG GUNUNG SAHARI MULU..."
+        ]
+    },
+    {
+        "name": "Sahari",
+        "lat": -8.5374685,
+        "lon": 117.4561818,
+        "count": 2,
+        "samples": [
+            "Sebelum di Update langsung bisa mengupdate Cuaca dari Saya tinggal, Setelah di Update posisi nya Tet...",
+            "Setelah diupdate posisi kelurahan/desa selalu gunung sahari selatan.. msh ada bugs udah production..."
+        ]
+    },
+    {
+        "name": "Sleman",
+        "lat": -7.6894175,
+        "lon": 110.3812904,
+        "count": 2,
+        "samples": [
+            "Oya sebelum nya saya nyuwun ngampunten geh mas saya belum dapat bantuan dari bansos atas nama pak bu..."
+        ]
+    },
+    {
+        "name": "Batang",
+        "lat": -7.0323546,
+        "lon": 109.867953,
+        "count": 2,
+        "samples": [
+            "Bisa mendeteksi gempa bumi, namun kadang-kadang tdk terdeteksi. Seperti gempa kemarin di batang, bar..."
+        ]
+    },
+    {
+        "name": "Sidoarjo",
+        "lat": -7.4539769,
+        "lon": 112.6593869,
+        "count": 2,
+        "samples": [
+            "Utk bmkg update gempa harus benar.. Sidoarjo kmrn tgl 23/03/24 juga merasakan gempa dan itu kekuatan..."
+        ]
+    },
+    {
+        "name": "Yogya",
+        "lat": -7.8012646,
+        "lon": 110.3646857,
+        "count": 2,
+        "samples": [
+            "aplikasinya bagus..cuma kalo boleh usul radar yg di yogya atau yg di semarang bisa di pindahin salah..."
+        ]
+    },
+    {
+        "name": "Kabupaten Tangerang",
+        "lat": -6.1644013,
+        "lon": 106.4679311,
+        "count": 1,
+        "samples": [
+            "Desa/Kelurahan yang masuk wilayah Kabupaten Bogor, Kabupaten Bekasi & Kabupaten Tangerang kalau dapa..."
+        ]
+    },
+    {
+        "name": "Cilebut Barat",
+        "lat": -6.5319191,
+        "lon": 106.794624,
+        "count": 1,
+        "samples": [
+            "Lokasi saya di Cilebut Barat, Sukaraja, Kabupaten Bogor kalau dapet notifikasi munculnya berita Peri..."
+        ]
+    },
+    {
+        "name": "Sukaraja",
+        "lat": -6.5721195,
+        "lon": 106.8403033,
+        "count": 1,
+        "samples": [
+            "Lokasi saya di Cilebut Barat, Sukaraja, Kabupaten Bogor kalau dapet notifikasi munculnya berita Peri..."
+        ]
+    },
+    {
+        "name": "Jagakarsa",
+        "lat": -6.3301011,
+        "lon": 106.8222371,
+        "count": 1,
+        "samples": [
+            "Lokasi saya di Cilebut Barat, Sukaraja, Kabupaten Bogor kalau dapet notifikasi munculnya berita Peri..."
+        ]
+    },
+    {
+        "name": "Sampit",
+        "lat": -2.5389113,
+        "lon": 112.949389,
+        "count": 1,
+        "samples": [
+            "daerah sampit kalimantan tengah gaada padahala ada kantor bmkg disini..."
+        ]
+    },
+    {
+        "name": "Kalimantan Tengah",
+        "lat": -1.499583,
+        "lon": 113.2903307,
+        "count": 1,
+        "samples": [
+            "daerah sampit kalimantan tengah gaada padahala ada kantor bmkg disini..."
+        ]
+    },
+    {
+        "name": "Kantor Bmkg",
+        "lat": -3.9704104,
+        "lon": 122.589668,
+        "count": 1,
+        "samples": [
+            "daerah sampit kalimantan tengah gaada padahala ada kantor bmkg disini..."
+        ]
+    },
+    {
+        "name": "Pekanbaru Riau",
+        "lat": 0.5568147,
+        "lon": 101.4515514,
+        "count": 1,
+        "samples": [
+            "Kocak bangetttt... Setelah di update, masa titiknya di gunung sahari terus, sudah diperbaiki pakai G..."
+        ]
+    },
+    {
+        "name": "Lang",
+        "lat": -6.1325649,
+        "lon": 106.6423653,
+        "count": 1,
+        "samples": [
+            "baru aja dowload lang sing ada peringatan gempa aja terus beneran deh gempa,, bener bener akurat nih..."
+        ]
+    }
+]

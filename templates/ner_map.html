@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+
+<style>
+    /* 1. ANIMASI EPICENTER (Gelombang Kejut Gempa) */
+    .epicenter-marker {
+        position: relative;
+        display: flex; justify-content: center; align-items: center;
+    }
+    .epicenter-core {
+        width: 16px; height: 16px; background: #d90429;
+        border: 2px solid white; border-radius: 50%; z-index: 10;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .epicenter-wave {
+        position: absolute;
+        border: 2px solid #d90429; border-radius: 50%;
+        opacity: 0; animation: shockwave 2s infinite;
+    }
+    .epicenter-wave::after {
+        content: ''; position: absolute; top: -50%; left: -50%;
+        width: 200%; height: 200%; border: 2px solid #d90429;
+        border-radius: 50%; opacity: 0; animation: shockwave 2s infinite 0.5s;
+    }
+    @keyframes shockwave {
+        0% { width: 0; height: 0; opacity: 1; border-width: 3px; }
+        100% { width: 80px; height: 80px; opacity: 0; border-width: 0px; }
+    }
+
+    /* 2. POPUP FRAME PARAMETER (Tabel Rapi) */
+    .popup-frame {
+        font-family: 'Roboto', sans-serif; min-width: 260px;
+    }
+    .popup-header {
+        color: white; padding: 8px; border-radius: 5px 5px 0 0;
+        font-weight: bold; text-align: center; text-transform: uppercase; font-size: 0.85rem;
+    }
+    .popup-header.quake { background: #d90429; }
+    .popup-header.weather { background: #00b4d8; }
+    
+    .popup-table { width: 100%; font-size: 0.8rem; border-collapse: collapse; margin-top: 5px; }
+    .popup-table td { padding: 5px; border-bottom: 1px solid #eee; color: #333; }
+    .popup-table td:first-child { font-weight: bold; color: #555; width: 40%; }
+    
+    /* 3. LOGO OVERLAY */
+    .map-logo-overlay {
+        position: absolute; bottom: 25px; left: 20px; z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 8px 12px; border-radius: 50px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        display: flex; align-items: center; border: 2px solid #0056b3;
+    }
+    .map-logo-overlay img { height: 35px; margin-right: 10px; }
+    .map-logo-text { line-height: 1.1; font-size: 0.7rem; color: #333; font-family: 'Rajdhani', sans-serif; }
+    .map-logo-text strong { color: #0056b3; font-size: 0.8rem; display: block; }
+</style>
+
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="tech-card py-3 px-4 d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="m-0 text-primary fw-bold"><i class="fas fa-globe-asia"></i> GEO-SPATIAL INTELLIGENCE</h4>
+                <small class="text-secondary">Integrasi Data Laporan Masyarakat, Sensor Tektonik, & Meteorologi</small>
+                <small class="text-danger d-block mt-1 fw-bold" style="font-size: 0.7rem;">
+                    *Analisis korelasi spasial dilakukan untuk memvalidasi laporan publik (titik oranye) dengan data sensor fisik (titik merah).
+                </small>
+            </div>
+            <div class="d-flex gap-2">
+                <span class="badge bg-danger border"><i class="fas fa-rss"></i> Live Quake</span>
+                <span class="badge bg-info border"><i class="fas fa-cloud"></i> Weather</span>
+                <span class="badge bg-warning text-dark border"><i class="fas fa-comment"></i> Reports</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tech-card p-0 overflow-hidden shadow-lg position-relative">
+    <div id="map" style="height: 650px; width: 100%;"></div>
+    
+    <div class="map-logo-overlay">
+        <img src="{{ url_for('static', filename='images/logo_bmkg.png') }}" alt="BMKG">
+        <div class="map-logo-text">
+            <strong>SUMBER DATA RESMI</strong>
+            Badan Meteorologi, Klimatologi,<br>dan Geofisika (BMKG)
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+
+<script>
+    // 1. Inisialisasi Peta (Center Indonesia)
+    var map = L.map('map').setView([-2.5, 118.0], 5);
+
+    // --- BASEMAPS (Pilihan Tampilan) ---
+    var streetMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap, © CARTO',
+        maxZoom: 19
+    });
+
+    var satelliteMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+
+    // Default: Street Map
+    streetMap.addTo(map);
+
+    // --- LAYER GROUPS ---
+    var layerGempa = L.layerGroup().addTo(map);
+    var layerCuaca = L.layerGroup().addTo(map);
+    var layerLaporan = L.markerClusterGroup().addTo(map);
+
+    // --- DATA 1: LIVE GEMPA (BMKG) ---
+    fetch('/api/live_quake').then(r => r.json()).then(data => {
+        // A. Gempa Terbaru
+        if(data.latest) {
+            let q = data.latest;
+            let coords = q.koordinat.split(',').map(parseFloat);
+            
+            let epiIcon = L.divIcon({
+                className: 'epicenter-marker',
+                html: `<div class="epicenter-wave"></div><div class="epicenter-core"></div>`,
+                iconSize: [80, 80], iconAnchor: [40, 40]
+            });
+
+            let popupContent = `
+                <div class="popup-frame">
+                    <div class="popup-header quake"><i class="fas fa-exclamation-triangle"></i> GEMPA TERKINI</div>
+                    <table class="popup-table">
+                        <tr><td>Waktu</td><td>${q.jam}</td></tr>
+                        <tr><td>Magnitudo</td><td><strong class="text-danger" style="font-size:1.1em">${q.magnitudo} SR</strong></td></tr>
+                        <tr><td>Kedalaman</td><td>${q.kedalaman}</td></tr>
+                        <tr><td>Lokasi</td><td>${q.wilayah}</td></tr>
+                        <tr><td>Potensi</td><td><span class="badge bg-warning text-dark">${q.potensi}</span></td></tr>
+                        <tr><td colspan="2" class="text-center p-2">
+                            <img src="${q.shakemap}" style="width:100%; border-radius:4px; border:1px solid #ccc;" alt="Shakemap tidak tersedia">
+                        </td></tr>
+                    </table>
+                </div>
+            `;
+
+            L.marker(coords, {icon: epiIcon, zIndexOffset: 1000})
+             .addTo(layerGempa)
+             .bindPopup(popupContent).openPopup();
+             
+            map.setView(coords, 6);
+        }
+
+        // B. 15 Gempa Terkini
+        if(data.recent) {
+            data.recent.forEach(q => {
+                let coords = q.koordinat.split(',').map(parseFloat);
+                let popupList = `
+                    <div class="popup-frame">
+                        <div class="popup-header quake" style="background:#555">RIWAYAT GEMPA</div>
+                        <table class="popup-table">
+                            <tr><td>Waktu</td><td>${q.jam}</td></tr>
+                            <tr><td>Magnitudo</td><td><strong>${q.magnitudo} SR</strong></td></tr>
+                            <tr><td>Kedalaman</td><td>${q.kedalaman}</td></tr>
+                            <tr><td>Lokasi</td><td>${q.wilayah}</td></tr>
+                        </table>
+                    </div>
+                `;
+                L.circleMarker(coords, {color: '#d90429', radius: 5, fillOpacity: 0.6, weight:1})
+                 .addTo(layerGempa)
+                 .bindPopup(popupList);
+            });
+        }
+    });
+
+    // --- DATA 2: LIVE CUACA (BMKG Multi-Kota) ---
+    fetch('/api/live_weather').then(r => r.json()).then(cityList => {
+        cityList.forEach(w => {
+            let iconWeather = L.divIcon({
+                className: '',
+                html: `<div style="background:white; padding:2px; border-radius:8px; border:1px solid #00b4d8; text-align:center; width:55px; box-shadow:0 3px 6px rgba(0,0,0,0.2);">
+                        <img src="${w.icon}" style="width:35px;">
+                        <div style="font-size:0.7rem; font-weight:bold; color:#0056b3;">${w.suhu}°C</div>
+                       </div>`,
+                iconSize: [55, 55], iconAnchor: [27, 27]
+            });
+
+            let popupWeather = `
+                <div class="popup-frame">
+                    <div class="popup-header weather"><i class="fas fa-cloud-sun"></i> CUACA HARI INI</div>
+                    <table class="popup-table">
+                        <tr><td>Lokasi</td><td>${w.kota}, ${w.provinsi}</td></tr>
+                        <tr><td>Kondisi</td><td><img src="${w.icon}" style="width:20px; vertical-align:middle;"> <strong>${w.desc}</strong></td></tr>
+                        <tr><td>Suhu</td><td>${w.suhu}°C (Humid: ${w.humid}%)</td></tr>
+                        <tr><td>Angin</td><td>${w.angin} km/jam (${w.angin_dir})</td></tr>
+                    </table>
+                </div>
+            `;
+
+            L.marker([w.lat, w.lon], {icon: iconWeather})
+             .addTo(layerCuaca)
+             .bindPopup(popupWeather);
+        });
+    });
+
+    // --- DATA 3: LAPORAN USER (POPUP CERDAS) ---
+    fetch('/static/data_map.json').then(r => r.json()).then(data => {
+        data.forEach(loc => {
+            let size = loc.count > 10 ? 16 : 10;
+            let icon = L.divIcon({
+                className: 'custom-div-icon',
+                html: `<div style="background-color:rgba(255, 165, 0, 0.7); width:${size}px; height:${size}px; border-radius:50%; border:2px solid white;"></div>`,
+                iconSize: [size, size]
+            });
+            
+            // Logic Status & Sentimen Dummy untuk Validasi
+            let status = loc.count > 5 ? "<span class='text-danger'>🔴 HIGH ACTIVITY</span>" : "<span class='text-success'>🟢 NORMAL</span>";
+            let sentiment = loc.count > 5 ? "Dominan Negatif" : "Netral/Info";
+
+            // List Sampel Keluhan
+            let samplesHtml = "";
+            if(loc.samples && loc.samples.length > 0) {
+                loc.samples.forEach(s => {
+                    samplesHtml += `<li style="margin-bottom:4px; padding-bottom:4px; border-bottom:1px dashed #eee;">"${s}"</li>`;
+                });
+            } else {
+                samplesHtml = "<li>Tidak ada detail teks tersedia.</li>";
+            }
+
+            // Popup Laporan
+            let popupReport = `
+                <div style="font-family: 'Roboto', sans-serif; min-width: 250px;">
+                    <div style="background: #333; color: #fff; padding: 6px 10px; border-radius: 4px 4px 0 0; font-size: 0.75rem; font-weight: bold; text-align:center;">
+                        LOKASI LAPORAN
+                    </div>
+                    <div style="padding: 10px; border: 1px solid #ccc; border-top: none; background: #fff;">
+                        <h6 style="margin: 0 0 5px 0; color: #0056b3; font-weight: bold; text-transform:uppercase;">${loc.name}</h6>
+                        <div style="font-size: 0.8rem; color: #555; margin-bottom: 8px;">
+                            <i class="fas fa-users"></i> <b>${loc.count}</b> Laporan Masuk
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 8px; border-radius: 4px; font-size: 0.7rem; border-left: 3px solid orange; line-height:1.4;">
+                            <strong>Status Area:</strong> ${status}<br>
+                            <strong>Sentimen:</strong> ${sentiment}<br>
+                            <hr style="margin:4px 0">
+                            <strong class="text-dark d-block mb-1">Sampel Keluhan:</strong>
+                            <ul style="padding-left: 15px; margin: 0; font-style: italic; color: #444; max-height: 80px; overflow-y: auto;">
+                                ${samplesHtml}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            layerLaporan.addLayer(L.marker([loc.lat, loc.lon], {icon: icon})
+                .bindPopup(popupReport));
+        });
+    });
+
+    // --- CONTROL LAYER (PEMILIHAN TAMPILAN) ---
+    var baseMaps = {
+        "Peta Jalan (Street)": streetMap,
+        "Citra Satelit": satelliteMap
+    };
+
+    var overlayMaps = {
+        "<span class='text-danger fw-bold'>⚡ Gempa Tektonik</span>": layerGempa,
+        "<span class='text-info fw-bold'>☁️ Cuaca Nasional</span>": layerCuaca,
+        "<span class='text-warning fw-bold'>💬 Laporan User</span>": layerLaporan
+    };
+
+    L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);
+
+</script>
+{% endblock %}

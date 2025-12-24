@@ -1,0 +1,177 @@
+/* --- CLEAN FUTURE TECH THEME (LIGHT MODE) --- */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --accent-blue: #0056b3;
+    --accent-cyan: #00b4d8;
+    --alert-red: #d90429;
+    --success-green: #198754;
+    --border-color: #e2e8f0;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image: radial-gradient(#cbd5e0 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding-bottom: 150px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-blue);
+}
+
+.word-wrap-fix {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+/* --- ANIMATED NAVBAR (NEW) --- */
+.navbar-custom {
+    background: white;
+    border-bottom: 4px solid var(--accent-blue);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 10px 0;
+}
+.navbar-brand {
+    color: var(--accent-blue) !important;
+    font-weight: 800;
+    font-size: 1.4rem;
+}
+
+/* Menu Link Styles */
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding: 10px 15px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* Efek Hover & Active (Garis Bawah Animasi) */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--accent-blue);
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover {
+    color: var(--accent-blue) !important;
+}
+
+.nav-link:hover::after {
+    width: 80%; /* Garis muncul saat hover */
+}
+
+/* Active State (Tetap Highlight saat halaman aktif) */
+.nav-link.active {
+    color: var(--accent-blue) !important;
+}
+.nav-link.active::after {
+    width: 100%; /* Garis penuh saat aktif */
+}
+
+/* Tech Cards */
+.tech-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+.tech-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-cyan);
+}
+.tech-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 4px;
+    background: var(--accent-blue);
+}
+
+/* Input & Buttons */
+.form-control {
+    background: #f8fafc;
+    border: 2px solid #cbd5e0;
+    color: var(--text-primary);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.95rem;
+}
+.form-control:focus {
+    background: white;
+    border-color: var(--accent-cyan);
+    box-shadow: none;
+}
+.btn-primary-tech {
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+.btn-primary-tech:hover {
+    background: #003d80;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 86, 179, 0.3);
+}
+
+/* Pulse Animation */
+.pulse-text { animation: pulse 1.5s infinite; }
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+.warning-icon-anim {
+    animation: blink-warning 1.5s infinite;
+}
+@keyframes blink-warning {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.9); }
+}
+
+/* Footer */
+footer {
+    background: #0f172a !important;
+    color: white !important;
+    border-top: 4px solid var(--accent-cyan) !important;
+}
+.disclaimer-box {
+    border: 1px dashed rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.05);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    color: #cbd5e0;
+}

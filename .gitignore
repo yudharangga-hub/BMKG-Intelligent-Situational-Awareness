@@ -1,0 +1,23 @@
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+env/
+.env
+
+# Large AI Models (PENTING: Agar push tidak gagal karena file >100MB)
+models/
+*.bin
+*.pth
+*.pt
+
+# Dataset (Opsional, jika data sangat besar)
+# data/raw/
+
+# IDE settings
+.vscode/
+.idea/
