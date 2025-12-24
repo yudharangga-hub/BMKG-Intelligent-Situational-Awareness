@@ -17,15 +17,16 @@ Berikut adalah tampilan antarmuka dari sistem yang telah dikembangkan:
 
 ### 1. Dashboard Utama (Analisis Sentimen & Integrasi API)
 *Memproses input teks pengguna menggunakan IndoBERT dan menampilkan data Gempa/Cuaca Real-time.*
-![Dashboard View](image_44947b.jpg)
+![Dashboard View](screenshots/Dashboard.jpg)
 
 ### 2. Geo-Spatial Intelligence (Peta Sebaran)
 *Validasi silang antara lokasi Laporan Warga (Oranye) dan Sensor Gempa (Merah) menggunakan NER.*
-![GeoMap View](image_45715a.jpg)
+![GeoMap View](screenshots/GeoMap.jpg)
 
 ### 3. Developer Action Center
 *Prescriptive Analytics yang memberikan rekomendasi perbaikan teknis berdasarkan klaster keluhan.*
-![Dev Center View](image_3a1450.jpg)
+![Dev Center View](screenshots/DevCenter.jpg)
+
 
 ---
 
