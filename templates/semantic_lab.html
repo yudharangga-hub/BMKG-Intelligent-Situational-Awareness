@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-primary fw-bold mb-3"><i class="fas fa-project-diagram"></i> Semantic Lab (Kamus Slang)</h2>
+    <p class="text-muted mb-4">Eksplorasi relasi kata, sinonim, dan jaringan makna berbasis Word2Vec. Cocok untuk analisis slang, sinonim, dan asosiasi kata dalam data keluhan.</p>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <input id="w2vInput" type="text" class="form-control form-control-lg" placeholder="Cari kata slang atau istilah... (misal: lemot)">
+        </div>
+        <div class="col-md-2">
+            <button id="w2vSearchBtn" class="btn btn-primary btn-lg w-100"><i class="fas fa-search"></i> Cari</button>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <div class="card-header bg-info text-white fw-bold"><i class="fas fa-network-wired"></i> Visualisasi Jaringan Kata</div>
+                <div class="card-body">
+                    <div id="w2vGraph" style="height:320px;"></div>
+                    <div id="w2vGraphPlaceholder" class="text-center text-muted small">Masukkan kata untuk melihat visualisasi jaringan kata terkait.</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white fw-bold"><i class="fas fa-list"></i> Daftar Sinonim/Asosiasi</div>
+                <div class="card-body p-2">
+                    <table class="table table-sm table-bordered mb-0" id="w2vTable">
+                        <thead><tr><th>Kata Mirip</th><th>Skor</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="w2vTablePlaceholder" class="text-center text-muted small mt-2">Belum ada data.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://unpkg.com/vis-network@9.1.2/dist/vis-network.min.js"></script>
+<script src="{{ url_for('static', filename='js/semantic_lab.js') }}"></script>
+{% endblock %}

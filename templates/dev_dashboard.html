@@ -98,6 +98,34 @@
     </div>
 </div>
 
+<!-- Smart Reply Button & Modal -->
+<div class="row mb-4">
+        <div class="col-12 text-center">
+                <button id="generateReplyBtn" class="btn btn-warning fw-bold px-4 py-2" style="font-size:1.1rem;">
+                        <i class="fas fa-bolt"></i> Generate Reply
+                </button>
+        </div>
+</div>
+
+<!-- Modal Draft Balasan -->
+<div class="modal fade" id="replyModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-bolt text-warning"></i> Draf Balasan Otomatis</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <textarea id="replyDraft" class="form-control" rows="5" readonly>...</textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('replyDraft').value)"><i class="fas fa-copy"></i> Copy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // 1. Fetch & Render Bug Report
     fetch('/static/bug_report.json')
@@ -197,5 +225,13 @@
             }
         }
     });
+    // Smart Reply Button Logic (Dummy)
+    document.getElementById('generateReplyBtn').onclick = function() {
+        // Dummy draft reply, ganti dengan fetch ke backend jika sudah siap
+        let draft = "Terima kasih atas laporan Anda. Tim kami akan segera menindaklanjuti keluhan terkait sinyal. Mohon kesediaannya menunggu update selanjutnya.";
+        document.getElementById('replyDraft').value = draft;
+        var modal = new bootstrap.Modal(document.getElementById('replyModal'));
+        modal.show();
+    };
 </script>
 {% endblock %}

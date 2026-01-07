@@ -1,3 +1,84 @@
+/* Floating Chatbot Widget */
+.chatbot-widget {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9999;
+}
+.chatbot-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #0d47a1;
+    color: #fff;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-size: 1.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.chatbot-fab:hover {
+    background: #1565c0;
+}
+.chatbot-popup {
+    display: none;
+    flex-direction: column;
+    width: 320px;
+    max-height: 420px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    position: absolute;
+    right: 0;
+    bottom: 70px;
+    overflow: hidden;
+}
+.chatbot-widget.open .chatbot-popup {
+    display: flex;
+}
+.chatbot-header {
+    background: #0d47a1;
+    color: #fff;
+    padding: 10px 16px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.chatbot-body {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    background: #f8fafc;
+    font-size: 0.97rem;
+}
+.chat-msg {
+    margin-bottom: 8px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    max-width: 90%;
+}
+.chat-msg.user {
+    background: #e3f2fd;
+    align-self: flex-end;
+    text-align: right;
+}
+.chat-msg.bot {
+    background: #fffde7;
+    border-left: 3px solid #0d47a1;
+    align-self: flex-start;
+}
+.chatbot-form {
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background: #f8fafc;
+}
+.chatbot-form input {
+    flex: 1;
+}
+.chatbot-form button {
+    min-width: 40px;
+}
 /* --- CLEAN FUTURE TECH THEME (LIGHT MODE) --- */
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap');
 
