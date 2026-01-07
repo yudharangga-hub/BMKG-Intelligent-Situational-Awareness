@@ -1,3 +1,120 @@
+# BMKG Intelligent Situational Awareness
+
+Sistem analitik cerdas untuk monitoring, analisis, dan visualisasi data cuaca, gempa, dan sentimen berbasis NLP dan Word2Vec. Mendukung chatbot BMKG, smart reply, dan Semantic Lab (Kamus Slang).
+
+---
+
+## Fitur Utama
+- **Chatbot BMKG**: Jawab pertanyaan cuaca, gempa, dan peringatan secara real-time.
+- **Smart Reply**: Rekomendasi balasan cerdas untuk pengelola aplikasi.
+- **Semantic Lab**: Eksplorasi relasi kata, sinonim, dan jaringan makna berbasis Word2Vec.
+- **Visualisasi Jaringan Kata**: Interaktif, berbasis vis-network.
+- **Analisis Sentimen**: Klasifikasi sentimen otomatis dari data keluhan.
+- **Integrasi Data BMKG**: Live feed cuaca, gempa, dan peringatan dini.
+
+---
+
+## Struktur Folder
+
+```
+BMKG_NLP_Analytics/
+├── app.py
+├── config.py
+├── README.md
+├── requirements.txt
+├── data/
+│   ├── processed/
+│   │   ├── dataset_absa_labeled.csv
+│   │   └── dataset_emotion_labeled.csv
+│   └── raw/
+│       └── arsip_scraping_lengkap.csv
+├── models/
+│   ├── aspect_model/
+│   │   └── ... (model IndoBERT, tokenizer, dsb)
+│   ├── emotion_model/
+│   │   └── ... (model IndoBERT, tokenizer, dsb)
+│   ├── word2vec/
+│   │   └── word2vec.bin
+│   ├── checkpoints/
+│   │   └── ... (checkpoint training aspect)
+│   └── emotion_checkpoints/
+│       └── ... (checkpoint training emotion)
+├── notebooks/
+├── screenshots/
+├── scripts/
+│   ├── 01_data_preparation.py
+│   ├── 02_train_aspect_model.py
+│   ├── 03_ner_geomapping.py
+│   ├── 04_emotion_training.py
+│   ├── 05_time_series_prep.py
+│   ├── 06_generate_metrics.py
+│   ├── 07_bug_extraction.py
+│   ├── 09_generate_wordcloud.py
+│   ├── 10_run_benchmark.py
+│   └── train_word2vec_from_csv.py
+├── static/
+│   ├── bug_report.json
+│   ├── data_map.json
+│   ├── model_metrics.json
+│   ├── trends_data.json
+│   ├── css/
+│   │   └── style.css
+│   ├── images/
+│   ├── js/
+│   │   ├── chatbot_widget.js
+│   │   └── semantic_lab.js
+├── templates/
+│   ├── base.html
+│   ├── dev_dashboard.html
+│   ├── index.html
+│   ├── ner_map.html
+│   └── trends.html
+│   └── semantic_lab.html
+├── utils/
+│   ├── __init__.py
+│   ├── bmkg_api.py
+│   ├── model_handler.py
+│   ├── preprocessing.py
+│   └── word2vec_handler.py
+└── ...
+```
+
+---
+
+## Cara Menjalankan
+
+1. **Install dependensi**
+    ```
+    pip install -r requirements.txt
+    ```
+2. **Training Word2Vec (opsional, jika ingin update model):**
+    ```
+    python scripts/train_word2vec_from_csv.py
+    ```
+3. **Jalankan aplikasi**
+    ```
+    python app.py
+    ```
+4. **Akses di browser**
+    - Dashboard: http://127.0.0.1:5000/
+    - Semantic Lab: http://127.0.0.1:5000/semantic_lab
+
+---
+
+## Catatan
+- Model IndoBERT dan Word2Vec tidak disertakan di repo (file besar), silakan generate sendiri dari data.
+- Untuk visualisasi jaringan kata, gunakan browser modern (sudah terintegrasi vis-network).
+- Semua API dan fitur utama sudah terdaftar di app.py.
+
+---
+
+## Kontribusi
+Pull request dan issue sangat terbuka untuk pengembangan lebih lanjut!
+
+---
+
+## Lisensi
+MIT
 # 🌍 Intelligent Situational Awareness Platform (BMKG-INTEL)
 
 > **Thesis Project: Magister Teknik Informatika**
@@ -57,54 +174,6 @@ Menggunakan model *Pre-trained* **IndoBERT** yang di-*fine-tune* dengan 5.000 da
 - **AI Recommendation:** Memberikan saran perbaikan teknis (coding suggestion) kepada developer.
 - **Smart Reply:** Membuat draf balasan otomatis untuk Customer Service.
 
----
-
-## 📂 Struktur Proyek
-
-```text
-BMKG-INTEL/
-├── app.py                   # Entry point aplikasi Flask (Main Server)
-├── requirements.txt         # Daftar dependensi pustaka Python
-├── README.md                # Dokumentasi proyek
-├── .gitignore               # Daftar file yang diabaikan oleh Git
-│
-├── screenshots/             # Galeri Tampilan Sistem
-│   ├── Dashboard.jpg
-│   ├── DevCenter.jpg
-│   └── GeoMap.jpg
-│
-├── data/                    # Manajemen Data
-│   ├── raw/                 # Data mentah hasil scraping (CSV)
-│   └── processed/           # Data bersih siap training/analisis
-│
-├── models/                  # Penyimpanan Model AI (Gitignored karena besar)
-│   ├── aspect_model/        # Model IndoBERT Fine-Tuned untuk Aspek
-│   └── emotion_model/       # Model IndoBERT Fine-Tuned untuk Emosi
-│
-├── scripts/                 # Kumpulan Script Utilitas Python
-│   ├── 01_train_model.py    # Script training model AI (IndoBERT)
-│   ├── 03_ner_geomapping.py # Script ekstraksi lokasi (NER) untuk Peta
-│   ├── 07_bug_extraction.py # Script analisis bug otomatis
-│   └── 10_run_benchmark.py  # Script komparasi algoritma (Bi-LSTM vs BERT)
-│
-├── static/                  # File Statis (Frontend Assets)
-│   ├── css/                 # Styling tampilan dashboard (Modern UI)
-│   ├── js/                  # Script JavaScript tambahan
-│   ├── data_map.json        # Output JSON untuk Geo-Map
-│   └── bug_report.json      # Output JSON untuk Dev Center
-│
-├── templates/               # Template HTML (Jinja2)
-│   ├── base.html            # Layout utama (Navbar, Footer)
-│   ├── dashboard.html       # Halaman Utama (Analisis Teks & Widget)
-│   ├── ner_map.html         # Halaman Peta Geospasial
-│   ├── dev_dashboard.html   # Halaman Developer Action Center
-│   └── trends.html          # Halaman Grafik Tren
-│
-└── utils/                   # Modul Pembantu (Helper Classes)
-    ├── bmkg_api.py          # Handler koneksi ke API BMKG Real-time
-    └── model_handler.py     # Logic Inferensi AI & Rekomendasi Teknis
-
-```    
 ## 📦 Instalasi & Penggunaan
 Ikuti langkah ini untuk menjalankan sistem di komputer lokal Anda.
 
